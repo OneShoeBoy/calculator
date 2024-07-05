@@ -1,0 +1,22 @@
+#container{
+  margin: auto;
+  width: 420px;
+  padding: 10px;
+}
+.row{
+  border: solid;
+  height: 80px;
+  display: flex;
+}
+.column{
+  border: solid;
+  width: 25%;
+  height: 80px;
+}
+.button{
+  height: auto;
+  width: auto;
+}
+#zero{
+  width: 52%;
+}
