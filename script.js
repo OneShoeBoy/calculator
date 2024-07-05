@@ -62,17 +62,6 @@ function operation(num1, num2, operator) {
 
 const numberButtons = document.querySelectorAll(".button.number");
 const symbolButtons = document.querySelectorAll(".button.symbol");
-const resetButton = document.querySelector(".button.reset");
-
-resetButton.addEventListener("click", () => {
-  refreshDisplay(0)
-  calc = {
-    display: '',
-    num1: null,
-    num2: null,
-    operator: null,
-  }
-})
 
 numberButtons.forEach((button) => {
   button.addEventListener("click", (event) => {
@@ -97,3 +86,14 @@ symbolButtons.forEach((button) => {
   })
 })
 
+const resetButton = document.querySelector(".button.reset");
+
+resetButton.addEventListener("click", () => {
+  refreshDisplay(0)
+  calc = {
+    display: '',
+    num1: null,
+    num2: null,
+    operator: null,
+  }
+})
