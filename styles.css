@@ -1,26 +1,40 @@
-/* TODO:
- * -[] Add styling, make it pretty!
- */
-
 #container{
   margin: auto;
-  width: 420px;
-  padding: 10px;
+  width: 380px;
 }
 .row{
-  border: solid;
+  /*border: solid;*/
   height: 80px;
   display: flex;
 }
+#displayContainer{
+  height: 100px;
+  color: #FFFFFF;
+  background-color: #6750A4;
+  border-radius: 10px;
+  margin-bottom: 2px;
+}
+#display{
+  font-family: monospace;
+  font-size: 4em;
+  padding: 5px;
+  margin-top: 15px;
+}
 .column{
-  border: solid;
+  /*border: solid;*/
   width: 25%;
   height: 80px;
 }
 .button{
-  height: auto;
-  width: auto;
+  background-color: #21005D;
+  color: #FFFFFF;
+  border-radius: 10px;
+  height: 95%;
+  width: 98%;
+}
+.button:hover{
+  box-shadow: 0px 0px 5px #1D192B; 
 }
 #zero{
-  width: 52%;
+  width: 50%;
 }

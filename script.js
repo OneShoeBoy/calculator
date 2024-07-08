@@ -1,8 +1,3 @@
-// TODO: 
-// - [] Add percentage functionality
-// - [] Add pos/neg functionality
-
-
 function add(num1, num2) {
   return num1 + num2;
 }
@@ -27,8 +22,7 @@ function posneg(num) {
 
 let calc = {
   display: '',
-  num1: [],
-  num2: null,
+  calcArray: [],
   operator: null,
   result: null
 }
@@ -68,18 +62,7 @@ function operation(num1, num2, operator) {
       alert(`${num1}, ${num2}, or ${operator} are invalid, please try again.`)
   }
 
-
-
   return result
-  // calc = {
-  //   ...calc,
-  //   display: null,
-  //   num1: result,
-  //   num2: null
-  // }
-  // calc = {
-  //   ...calc, num1: result, operator: null
-  // }
 
 }
 
@@ -95,40 +78,40 @@ numberButtons.forEach((button) => {
 
 symbolButtons.forEach((button) => {
   button.addEventListener("click", (event) => {
-    calc.num1.push(calc.display);
+    calc.calcArray.push(calc.display);
     calc.display = ''
 
-    if (calc.num1.length < 2) {
+    if (calc.calcArray.length < 2) {
       calc.operator = event.target.value
     }
 
-    if (calc.num1.length == 2 && event.target.value != '=') {
-      calc.result = operation(Number(calc.num1[0]), Number(calc.num1[1]), calc.operator)
+    if (calc.calcArray.length == 2 && event.target.value != '=') {
+      calc.result = operation(Number(calc.calcArray[0]), Number(calc.calcArray[1]), calc.operator)
       if (isNaN(calc.result)) {
-        calc.num1 = []
+        calc.calcArray = []
         calc.result = null
         refreshDisplay(0)
         console.log(calc)
       } else {
         refreshDisplay(calc.result);
-        calc.num1 = []
-        calc.num1.push(calc.result)
+        calc.calcArray = []
+        calc.calcArray.push(calc.result)
         calc.operator = event.target.value
         console.log(calc)
       }
     }
 
-    if (calc.num1.length == 2 && event.target.value === '=') {
-      calc.result = operation(Number(calc.num1[0]), Number(calc.num1[1]), calc.operator)
+    if (calc.calcArray.length == 2 && event.target.value === '=') {
+      calc.result = operation(Number(calc.calcArray[0]), Number(calc.calcArray[1]), calc.operator)
       if (isNaN(calc.result)) {
-        calc.num1 = []
+        calc.calcArray = []
         calc.result = null
         refreshDisplay(0);
         console.log(calc)
       } else {
         refreshDisplay(calc.result)
-        calc.num1 = []
-        calc.num1.push(calc.result)
+        calc.calcArray = []
+        calc.calcArray.push(calc.result)
         console.log(calc)
       }
       // calc.operator = null;
@@ -143,7 +126,7 @@ resetButton.addEventListener("click", () => {
   refreshDisplay(0)
   calc = {
     display: '',
-    num1: [],
+    calcArray: [],
     operator: null,
     result: null,
   }
@@ -153,9 +136,9 @@ const posNegButton = document.querySelector(".button.posNeg");
 
 posNegButton.addEventListener("click", () => {
   if (!calc.display) {
-    let num = posneg(calc.num1[0]);
+    let num = posneg(calc.calcArray[0]);
     calc.display = num
-    calc.num1 = []
+    calc.calcArray = []
     displayNumber(calc.display)
   } else {
     let num = posneg(calc.display);
@@ -168,9 +151,9 @@ posNegButton.addEventListener("click", () => {
 const pctButton = document.querySelector(".button.pct")
 pctButton.addEventListener("click", () => {
   if (!calc.display) {
-    let num = percentage(calc.num1[0]);
+    let num = percentage(calc.calcArray[0]);
     calc.display = num
-    calc.num1 = []
+    calc.calcArray = []
     displayNumber(calc.display)
   } else {
     let num = percentage(calc.display);
