@@ -22,16 +22,15 @@ function percentage(num) {
   return num / 100
 }
 function posneg(num) {
-  if (num > 0) {
-    return -num
-  }
+  return -num
 }
 
 let calc = {
   display: '',
-  num1: null,
+  num1: [],
   num2: null,
   operator: null,
+  result: null
 }
 
 function refreshDisplay(numToDisplay) {
@@ -64,13 +63,15 @@ function operation(num1, num2, operator) {
     default:
       alert(`${num1}, ${num2}, or ${operator} are invalid, please try again.`)
   }
-  calc = {
-    ...calc,
-    display: null,
-    num1: result,
-    num2: null
-  }
-  refreshDisplay(calc.num1)
+
+
+  return result
+  // calc = {
+  //   ...calc,
+  //   display: null,
+  //   num1: result,
+  //   num2: null
+  // }
   // calc = {
   //   ...calc, num1: result, operator: null
   // }
@@ -89,26 +90,27 @@ numberButtons.forEach((button) => {
 
 symbolButtons.forEach((button) => {
   button.addEventListener("click", (event) => {
-    if (event.target.value === '=') {
-      console.log('= clicked')
-      console.log(calc)
-      console.log('------')
-    } else {
-      calc.operator = event.target.value;
+    calc.num1.push(calc.display);
+    calc.display = ''
+
+    if (calc.num1.length < 2) {
+      calc.operator = event.target.value
     }
 
-    if (!calc.num1) {
-      calc.num1 = Number(calc.display);
-      console.log('num1 assigned')
-      console.log(calc)
-      console.log('------')
-      refreshDisplay(calc.num1);
-    } else if (calc.num1) {
-      calc.num2 = Number(calc.display);
-      console.log('num2 assigned')
-      console.log(calc)
-      console.log('------')
-      operation(calc.num1, calc.num2, calc.operator)
+    if (calc.num1.length == 2 && event.target.value != '=') {
+      calc.result = operation(Number(calc.num1[0]), Number(calc.num1[1]), calc.operator)
+      refreshDisplay(calc.result);
+      calc.num1 = []
+      calc.num1.push(calc.result)
+      calc.operator = event.target.value
+    }
+
+    if (calc.num1.length == 2 && event.target.value === '=') {
+      calc.result = operation(Number(calc.num1[0]), Number(calc.num1[1]), calc.operator)
+      refreshDisplay(calc.result);
+      calc.num1 = []
+      calc.num1.push(calc.result)
+      // calc.operator = null;
     }
 
   })
@@ -120,24 +122,39 @@ resetButton.addEventListener("click", () => {
   refreshDisplay(0)
   calc = {
     display: '',
-    num1: null,
-    num2: null,
+    num1: [],
     operator: null,
+    result: null,
   }
 })
 
 const posNegButton = document.querySelector(".button.posNeg");
 
 posNegButton.addEventListener("click", () => {
-  let num = posneg(calc.display);
-  calc = {
-    ...calc, num1: num
+  if (!calc.display) {
+    let num = posneg(calc.num1[0]);
+    calc.display = num
+    calc.num1 = []
+    displayNumber(calc.display)
+  } else {
+    let num = posneg(calc.display);
+    calc.display = num
+    displayNumber(calc.display)
   }
-  refreshDisplay(num)
+
 })
 
-// Take current display number
-// Put negative sign in front
-// Update display with negative number
-// Update number store with negative number, if it exists
-// If no number store, then assign to num1
+const pctButton = document.querySelector(".button.pct")
+pctButton.addEventListener("click", () => {
+  if (!calc.display) {
+    let num = percentage(calc.num1[0]);
+    calc.display = num
+    calc.num1 = []
+    displayNumber(calc.display)
+  } else {
+    let num = percentage(calc.display);
+    calc.display = num;
+    displayNumber(calc.display);
+  }
+})
+
