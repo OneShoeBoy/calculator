@@ -1,3 +1,8 @@
+// TODO: 
+// - [] Add percentage functionality
+// - [] Add pos/neg functionality
+
+
 function add(num1, num2) {
   return num1 + num2;
 }
@@ -13,7 +18,14 @@ function multiply(num1, num2) {
 function divide(num1, num2) {
   return num1 / num2;
 }
-
+function percentage(num) {
+  return num / 100
+}
+function posneg(num) {
+  if (num > 0) {
+    return -num
+  }
+}
 
 let calc = {
   display: '',
@@ -49,14 +61,19 @@ function operation(num1, num2, operator) {
     case '÷':
       result = divide(num1, num2);
       break;
-    case '=':
-      console.log(result)
     default:
       alert(`${num1}, ${num2}, or ${operator} are invalid, please try again.`)
   }
   calc = {
-    ...calc, num1: result, operator: null
+    ...calc,
+    display: null,
+    num1: result,
+    num2: null
   }
+  refreshDisplay(calc.num1)
+  // calc = {
+  //   ...calc, num1: result, operator: null
+  // }
 
 }
 
@@ -67,22 +84,33 @@ numberButtons.forEach((button) => {
   button.addEventListener("click", (event) => {
     calc.display += event.target.value;
     displayNumber(calc.display);
-    if (calc.num1) {
-      calc.num2 = Number(calc.display);
-      operation(calc.num1, calc.num2, calc.operator)
-    }
   })
 })
 
 symbolButtons.forEach((button) => {
   button.addEventListener("click", (event) => {
-    calc.operator = event.target.value;
+    if (event.target.value === '=') {
+      console.log('= clicked')
+      console.log(calc)
+      console.log('------')
+    } else {
+      calc.operator = event.target.value;
+    }
+
     if (!calc.num1) {
       calc.num1 = Number(calc.display);
+      console.log('num1 assigned')
+      console.log(calc)
+      console.log('------')
       refreshDisplay(calc.num1);
     } else if (calc.num1) {
-      refreshDisplay(calc.num1)
+      calc.num2 = Number(calc.display);
+      console.log('num2 assigned')
+      console.log(calc)
+      console.log('------')
+      operation(calc.num1, calc.num2, calc.operator)
     }
+
   })
 })
 
@@ -97,3 +125,19 @@ resetButton.addEventListener("click", () => {
     operator: null,
   }
 })
+
+const posNegButton = document.querySelector(".button.posNeg");
+
+posNegButton.addEventListener("click", () => {
+  let num = posneg(calc.display);
+  calc = {
+    ...calc, num1: num
+  }
+  refreshDisplay(num)
+})
+
+// Take current display number
+// Put negative sign in front
+// Update display with negative number
+// Update number store with negative number, if it exists
+// If no number store, then assign to num1
