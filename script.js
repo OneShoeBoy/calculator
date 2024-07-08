@@ -58,11 +58,16 @@ function operation(num1, num2, operator) {
       result = multiply(num1, num2);
       break;
     case '÷':
+      if (num2 === 0) {
+        alert("You'll create a black hole!!");
+        return NaN;
+      }
       result = divide(num1, num2);
       break;
     default:
       alert(`${num1}, ${num2}, or ${operator} are invalid, please try again.`)
   }
+
 
 
   return result
@@ -99,17 +104,33 @@ symbolButtons.forEach((button) => {
 
     if (calc.num1.length == 2 && event.target.value != '=') {
       calc.result = operation(Number(calc.num1[0]), Number(calc.num1[1]), calc.operator)
-      refreshDisplay(calc.result);
-      calc.num1 = []
-      calc.num1.push(calc.result)
-      calc.operator = event.target.value
+      if (isNaN(calc.result)) {
+        calc.num1 = []
+        calc.result = null
+        refreshDisplay(0)
+        console.log(calc)
+      } else {
+        refreshDisplay(calc.result);
+        calc.num1 = []
+        calc.num1.push(calc.result)
+        calc.operator = event.target.value
+        console.log(calc)
+      }
     }
 
     if (calc.num1.length == 2 && event.target.value === '=') {
       calc.result = operation(Number(calc.num1[0]), Number(calc.num1[1]), calc.operator)
-      refreshDisplay(calc.result);
-      calc.num1 = []
-      calc.num1.push(calc.result)
+      if (isNaN(calc.result)) {
+        calc.num1 = []
+        calc.result = null
+        refreshDisplay(0);
+        console.log(calc)
+      } else {
+        refreshDisplay(calc.result)
+        calc.num1 = []
+        calc.num1.push(calc.result)
+        console.log(calc)
+      }
       // calc.operator = null;
     }
 
