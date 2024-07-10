@@ -16,9 +16,9 @@
 }
 #display{
   font-family: monospace;
-  font-size: 4em;
+  font-size: 4rem;
   padding: 5px;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 .column{
   /*border: solid;*/
@@ -26,6 +26,7 @@
   height: 80px;
 }
 .button{
+  font-size: 2rem;
   background-color: #21005D;
   color: #FFFFFF;
   border-radius: 10px;
